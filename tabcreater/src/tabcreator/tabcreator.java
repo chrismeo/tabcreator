@@ -10,7 +10,9 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
 import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -598,6 +603,42 @@ public class tabcreator {
 		for(int i=0;i<mypanel.N.length;i++) mypanel.N[i]=false; 
 	}
 	
+	private static void unzip(String zipFilePath, String destDir) throws IOException
+	{
+        File dir = new File(destDir);
+        // create output directory if it doesn't exist
+        if(!dir.exists()) dir.mkdirs();
+        
+        FileInputStream fis;
+        //buffer for read and write data to file
+        byte[] buffer = new byte[1024];
+        
+        fis = new FileInputStream(zipFilePath);
+        ZipInputStream zis = new ZipInputStream(fis);
+        ZipEntry ze = zis.getNextEntry();
+        while(ze != null)
+        {
+            String fileName = ze.getName();
+            File newFile = new File(destDir + File.separator + fileName);
+            System.out.println("Unzipping to "+newFile.getAbsolutePath());
+            //create directories for sub directories in zip
+            new File(newFile.getParent()).mkdirs();
+            FileOutputStream fos = new FileOutputStream(newFile);
+            int len;
+            while ((len = zis.read(buffer)) > 0) {
+            fos.write(buffer, 0, len);
+            }
+            fos.close();
+            //close this ZipEntry
+            zis.closeEntry();
+            ze = zis.getNextEntry();
+        }
+        //close last ZipEntry
+        zis.closeEntry();
+        zis.close();
+        fis.close();
+	}
+	
 	public static void main(String[] args) 
 	{	
 		fill_hash_map();
@@ -618,7 +659,7 @@ public class tabcreator {
 	   myframe.getContentPane().setLayout(new BoxLayout(myframe.getContentPane(),BoxLayout.Y_AXIS));   
 	   buttonlowG = new JButton("Low G");
 	   buttonhighG = new JButton("High G");
-	   buttonselectmusicXML = new JButton("select musicXMl File and convert");
+	   buttonselectmusicXML = new JButton("select musicXML File and convert");
 	   panel = new mypanel();
 	   panel.setPreferredSize(new Dimension(1000,500));
        panel.setBackground(/*Color.DARK_GRAY*/Color.WHITE);
@@ -634,8 +675,34 @@ public class tabcreator {
     		  if (returnVal == JFileChooser.APPROVE_OPTION)
     		  {
     		      xmlfile = filechooser.getSelectedFile(); 
-    		      parse_xmlfile(); 
-    	    	  process_xmlfile();
+    		      
+    		      //if file ends with .mxl unzip fist
+    		      String name = xmlfile.getName();
+    		      int length = name.length();
+    		      if(name.substring(length-3, length).compareTo("mxl")==0) 
+    		      {
+    		    	  System.out.println("mxl");    		    	        		     
+    		    	  String zipFilePath = xmlfile.getAbsolutePath();
+    		  		  String destDir = "output/";
+    		  		  
+    		  		  try 
+    				  {
+    					  unzip(zipFilePath, destDir);
+    					  File folder = new File("output/");
+    					  xmlfile = folder.listFiles()[0];
+    					  System.out.println(xmlfile.getName());
+    					  parse_xmlfile(); 
+        	    	      process_xmlfile();
+    				  } 
+    				
+    				  catch (IOException e) {e.printStackTrace();}
+    		      }
+    		      
+    		      else
+    		      {
+    		          parse_xmlfile(); 
+    	    	      process_xmlfile();
+    		      }
     		  }
     		 
     		  else
@@ -675,300 +742,300 @@ public class tabcreator {
            public void mousePressed(MouseEvent e) {
                mousePT = e.getPoint();
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>330) && (mousePT.getY()<360)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>330) && (mousePT.getY()<360)){
             	   mypanel.N[1] = !mypanel.N[1];
             	   mypanel.P[0] = mypanel.N[1];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>315) && (mousePT.getY()<345)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>315) && (mousePT.getY()<345)){
             	   mypanel.N[2] = !mypanel.N[2];
             	   mypanel.P[2] = mypanel.N[2];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>300) && (mousePT.getY()<330)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>300) && (mousePT.getY()<330)){
             	   mypanel.N[3] = !mypanel.N[3];
             	   mypanel.P[4] = mypanel.N[3];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>285) && (mousePT.getY()<315)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>285) && (mousePT.getY()<315)){
             	   mypanel.N[4] = !mypanel.N[4];
             	   mypanel.P[5] = mypanel.N[4];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>270) && (mousePT.getY()<300)) {
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>270) && (mousePT.getY()<300)) {
             	   mypanel.N[5] = !mypanel.N[5];
             	   mypanel.P[7] = mypanel.N[5];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>255) && (mousePT.getY()<285)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>255) && (mousePT.getY()<285)){
             	   mypanel.N[6] = !mypanel.N[6];
             	   mypanel.P[9] = mypanel.N[6];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>240) && (mousePT.getY()<270)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>240) && (mousePT.getY()<270)){
             	   mypanel.N[7] = !mypanel.N[7];
             	   mypanel.P[10] = mypanel.N[7];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>225) && (mousePT.getY()<255)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>225) && (mousePT.getY()<255)){
             	   mypanel.N[8] = !mypanel.N[8];
             	   mypanel.P[12] = mypanel.N[8];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>210) && (mousePT.getY()<240)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>210) && (mousePT.getY()<240)){
             	   mypanel.N[9] = !mypanel.N[9];
             	   mypanel.P[14] = mypanel.N[9];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>195) && (mousePT.getY()<225)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>195) && (mousePT.getY()<225)){
             	   mypanel.N[10] = !mypanel.N[10];
             	   mypanel.P[16] = mypanel.N[10];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>180) && (mousePT.getY()<210)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>180) && (mousePT.getY()<210)){
             	   mypanel.N[11] = !mypanel.N[11];
             	   mypanel.P[17] = mypanel.N[11];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>165) && (mousePT.getY()<195)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>165) && (mousePT.getY()<195)){
             	   mypanel.N[12] = !mypanel.N[12];
             	   mypanel.P[19] = mypanel.N[12];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>150) && (mousePT.getY()<180)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>150) && (mousePT.getY()<180)){
             	   mypanel.N[13] = !mypanel.N[13];
             	   mypanel.P[21] = mypanel.N[13];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>135) && (mousePT.getY()<165)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>135) && (mousePT.getY()<165)){
             	   mypanel.N[14] = !mypanel.N[14];
             	   mypanel.P[22] = mypanel.N[14];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>120) && (mousePT.getY()<150)){
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>120) && (mousePT.getY()<150)){
             	   mypanel.N[15] = !mypanel.N[15];
             	   mypanel.P[24] = mypanel.N[15];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>105) && (mousePT.getY()<135)){
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>105) && (mousePT.getY()<135)){
             	   mypanel.N[16] = !mypanel.N[16];
             	   mypanel.P[26] = mypanel.N[16];
                }
                
-               if((mousePT.getX()>60) &&  (mousePT.getX()<90) && (mousePT.getY()>90) && (mousePT.getY()<120)) {
+               if((mousePT.getX()>60+50) &&  (mousePT.getX()<90+50) && (mousePT.getY()>90) && (mousePT.getY()<120)) {
             	   mypanel.N[17] = !mypanel.N[17];
             	   mypanel.P[28] = mypanel.N[17];
                }
                
-               if((mousePT.getX()>90) &&  (mousePT.getX()<120) && (mousePT.getY()>75) && (mousePT.getY()<105)) {
+               if((mousePT.getX()>90+50) &&  (mousePT.getX()<120+50) && (mousePT.getY()>75) && (mousePT.getY()<105)) {
             	   mypanel.N[18] = !mypanel.N[18];
             	   mypanel.P[29] = mypanel.N[18];
                }
                
                //# und b markieren
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>330) && (mousePT.getY()<360)) {
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>330) && (mousePT.getY()<360)) {
             	   mypanel.S[1] = !mypanel.S[1];
             	   mypanel.N[1] = mypanel.S[1];
             	   mypanel.P[1] = mypanel.S[1];
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>300) && (mousePT.getY()<330)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>300) && (mousePT.getY()<330)){
             	   mypanel.S[3] = !mypanel.S[3];
             	   mypanel.N[3] = mypanel.S[3];
             	   mypanel.P[5] = mypanel.S[3];
             	   mypanel.B[3] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>270) && (mousePT.getY()<300)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>270) && (mousePT.getY()<300)){
             	   mypanel.S[5] = !mypanel.S[5];
             	   mypanel.N[5] = mypanel.S[5];
             	   mypanel.P[8] = mypanel.S[5];
             	   mypanel.B[5] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>240) && (mousePT.getY()<270)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>240) && (mousePT.getY()<270)){
             	   mypanel.S[7] = !mypanel.S[7];
             	   mypanel.N[7] = mypanel.S[7];
             	   mypanel.P[11] = mypanel.S[7];
             	   mypanel.B[7] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>210) && (mousePT.getY()<240)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>210) && (mousePT.getY()<240)){
             	   mypanel.S[9] = !mypanel.S[9];
             	   mypanel.N[9] = mypanel.S[9];
             	   mypanel.P[15] = mypanel.S[9];
             	   mypanel.B[9] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>180) && (mousePT.getY()<210)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>180) && (mousePT.getY()<210)){
             	   mypanel.S[11] = !mypanel.S[11];
             	   mypanel.N[11] = mypanel.S[11];
             	   mypanel.P[18] = mypanel.S[11];
             	   mypanel.B[11] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>150) && (mousePT.getY()<180)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>150) && (mousePT.getY()<180)){
             	   mypanel.S[13] = !mypanel.S[13];
             	   mypanel.N[13] = mypanel.S[13];
             	   mypanel.P[22] = mypanel.S[13];
             	   mypanel.B[13] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>120) && (mousePT.getY()<150)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>120) && (mousePT.getY()<150)){
             	   mypanel.S[15] = !mypanel.S[15];
             	   mypanel.N[15] = mypanel.S[15];
             	   mypanel.P[25] = mypanel.S[15];
             	   mypanel.B[15] = false;
                }
                
-               if((mousePT.getX()>35) &&  (mousePT.getX()<65) && (mousePT.getY()>90) && (mousePT.getY()<120)){
+               if((mousePT.getX()>35+50) &&  (mousePT.getX()<65+50) && (mousePT.getY()>90) && (mousePT.getY()<120)){
             	   mypanel.S[17] = !mypanel.S[17];
             	   mypanel.N[17]= mypanel.S[17];
             	   mypanel.P[29] = mypanel.S[17];
             	   mypanel.B[17] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>315) && (mousePT.getY()<345)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>315) && (mousePT.getY()<345)){
             	   mypanel.S[2] = !mypanel.S[2];
             	   mypanel.N[2] = mypanel.S[2];
             	   mypanel.P[3] = mypanel.S[2];
             	   mypanel.B[2] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>285) && (mousePT.getY()<315)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>285) && (mousePT.getY()<315)){
             	   mypanel.S[4] = !mypanel.S[4];
             	   mypanel.N[4] = mypanel.S[4];
             	   mypanel.P[6] = mypanel.S[4];
             	   mypanel.B[4] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>255) && (mousePT.getY()<285)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>255) && (mousePT.getY()<285)){
             	   mypanel.S[6] = !mypanel.S[6];
             	   mypanel.N[6] = mypanel.S[6];
             	   mypanel.P[10] = mypanel.S[6];
             	   mypanel.B[6] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>225) && (mousePT.getY()<255)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>225) && (mousePT.getY()<255)){
             	   mypanel.S[8] = !mypanel.S[8];
             	   mypanel.N[8] = mypanel.S[8];
             	   mypanel.P[13] = mypanel.S[8];
             	   mypanel.B[8] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>185) && (mousePT.getY()<225)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>185) && (mousePT.getY()<225)){
             	   mypanel.S[10] = !mypanel.S[10];
             	   mypanel.N[10] = mypanel.S[10];
             	   mypanel.P[17]= mypanel.S[10];
             	   mypanel.B[10] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>155) && (mousePT.getY()<185)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>155) && (mousePT.getY()<185)){
             	   mypanel.S[12] = !mypanel.S[12];
             	   mypanel.N[12] = mypanel.S[12];
             	   mypanel.P[20] = mypanel.S[12];
             	   mypanel.B[12] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>125) && (mousePT.getY()<155)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>125) && (mousePT.getY()<155)){
             	   mypanel.S[14] = !mypanel.S[14];
             	   mypanel.N[14] = mypanel.S[14];
             	   mypanel.P[23] =mypanel.S[14];
             	   mypanel.B[14] = false;
                }
                
-               if((mousePT.getX()>115) &&  (mousePT.getX()<145) && (mousePT.getY()>95) && (mousePT.getY()<125)){
+               if((mousePT.getX()>115+50) &&  (mousePT.getX()<145+50) && (mousePT.getY()>95) && (mousePT.getY()<125)){
             	   mypanel.S[16] = !mypanel.S[16];
             	   mypanel.N[16] = mypanel.S[16];
                    mypanel.P[27] = mypanel.S[16];
                    mypanel.B[16] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>300) && (mousePT.getY()<330)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>300) && (mousePT.getY()<330)){
             	   mypanel.B[3] = !mypanel.B[3];
             	   mypanel.N[3] = mypanel.B[3];
             	   mypanel.P[3] = mypanel.B[3];
             	   mypanel.S[3] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>270) && (mousePT.getY()<300)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>270) && (mousePT.getY()<300)){
             	   mypanel.B[5] = !mypanel.B[5];
             	   mypanel.N[5] = mypanel.B[5];
             	   mypanel.P[6] = mypanel.B[5];
             	   mypanel.S[5] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>240) && (mousePT.getY()<270)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>240) && (mousePT.getY()<270)){
             	   mypanel.B[7] = !mypanel.B[7];
             	   mypanel.N[7] = mypanel.B[7];
             	   mypanel.P[9] = mypanel.B[7];
             	   mypanel.S[7] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>210) && (mousePT.getY()<240)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>210) && (mousePT.getY()<240)){
             	   mypanel.B[9] = !mypanel.B[9];
             	   mypanel.N[9] = mypanel.B[9];
             	   mypanel.P[13] = mypanel.B[9];
             	   mypanel.S[9] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>180) && (mousePT.getY()<210)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>180) && (mousePT.getY()<210)){
             	   mypanel.B[11] = !mypanel.B[11];
             	   mypanel.N[11] = mypanel.B[11];
             	   mypanel.P[16] = mypanel.B[11];
             	   mypanel.S[11] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>150) && (mousePT.getY()<180)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>150) && (mousePT.getY()<180)){
             	   mypanel.B[13] = !mypanel.B[13];
             	   mypanel.N[13] = mypanel.B[13];
             	   mypanel.P[20] = mypanel.B[13];
             	   mypanel.S[13] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>120) && (mousePT.getY()<150)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>120) && (mousePT.getY()<150)){
             	   mypanel.B[15] = !mypanel.B[15];
             	   mypanel.N[15] = mypanel.B[15];
             	   mypanel.P[23] = mypanel.B[15];
             	   mypanel.S[15] = false;
                }
                
-               if((mousePT.getX()>10) &&  (mousePT.getX()<30) && (mousePT.getY()>90) && (mousePT.getY()<120)){
+               if((mousePT.getX()>10+50) &&  (mousePT.getX()<30+50) && (mousePT.getY()>90) && (mousePT.getY()<120)){
             	   mypanel.B[17] = !mypanel.B[17];
             	   mypanel.N[17] = mypanel.B[17];
             	   mypanel.P[27] = mypanel.B[17];
             	   mypanel.S[17] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>315) && (mousePT.getY()<345)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>315) && (mousePT.getY()<345)){
             	   mypanel.B[2] = !mypanel.B[2];
             	   mypanel.N[2] = mypanel.B[2];
             	   mypanel.P[1] = mypanel.B[2];
             	   mypanel.S[2] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>285) && (mousePT.getY()<315)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>285) && (mousePT.getY()<315)){
             	   mypanel.B[4] = !mypanel.B[4];
             	   mypanel.N[4] = mypanel.B[4];
             	   mypanel.P[4] = mypanel.B[4];
             	   mypanel.S[4] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>255) && (mousePT.getY()<285)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>255) && (mousePT.getY()<285)){
                    mypanel.B[6] = !mypanel.B[6];
                    mypanel.N[6] = mypanel.B[6];
                    mypanel.P[8] = mypanel.B[6];
                    mypanel.S[6] = false;
                }    
                    
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>225) && (mousePT.getY()<255)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>225) && (mousePT.getY()<255)){
             	   mypanel.B[8] = !mypanel.B[8];
             	   mypanel.N[8] = mypanel.B[8];
             	   mypanel.P[15] = mypanel.B[8];
             	   mypanel.S[8] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>185) && (mousePT.getY()<225)) 
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>185) && (mousePT.getY()<225)) 
                {
             	   mypanel.B[10] = !mypanel.B[10];
             	   mypanel.N[10] = mypanel.B[10];
@@ -976,28 +1043,28 @@ public class tabcreator {
             	   mypanel.S[10] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>155) && (mousePT.getY()<185)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>155) && (mousePT.getY()<185)){
             	   mypanel.B[12] = !mypanel.B[12];
             	   mypanel.N[12] = mypanel.B[12];
             	   mypanel.P[18] = mypanel.B[12];
             	   mypanel.S[12] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>125) && (mousePT.getY()<155)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>125) && (mousePT.getY()<155)){
             	   mypanel.B[14] = !mypanel.B[14];
             	   mypanel.N[14] = mypanel.B[14];
             	   mypanel.P[21] = mypanel.B[14];
             	   mypanel.S[14] = false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>95) && (mousePT.getY()<125)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>95) && (mousePT.getY()<125)){
             	   mypanel.B[16] = !mypanel.B[16];
             	   mypanel.N[16] = mypanel.B[16];
             	   mypanel.P[25] =mypanel.B[16];
             	   mypanel.S[16]= false;
                }
                
-               if((mousePT.getX()>145) &&  (mousePT.getX()<175) && (mousePT.getY()>65) && (mousePT.getY()<95)){
+               if((mousePT.getX()>145+50) &&  (mousePT.getX()<175+50) && (mousePT.getY()>65) && (mousePT.getY()<95)){
             	   mypanel.B[18] = !mypanel.B[18];
             	   mypanel.N[18] = mypanel.B[18];
             	   mypanel.P[28] = mypanel.B[18];
