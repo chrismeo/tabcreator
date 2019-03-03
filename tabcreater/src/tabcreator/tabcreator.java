@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,6 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import javax.swing.JOptionPane;
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -52,7 +54,7 @@ public class tabcreator {
 	public static String fileName = "data.txt";
 	public static JFrame myframe;
 	public static JPanel panel, buttonpanel, buttonpanel2;
-	public static JButton buttonselectmusicXML, buttonlowG, buttonhighG ,convertbutton, clearbutton, /*otherTAB,*/ makeTABfile, barline;
+	public static JButton buttonselectmusicXML, buttonlowG, buttonhighG ,convertbutton, clearbutton, makeTABfile, barline;
 	public static Point mousePT;
 	static int[] result = new int[]{-1,-1,-1,-1};
 	public static String path="C:\\Users\\name\\workspace\\Test.txt";
@@ -63,6 +65,7 @@ public class tabcreator {
 	public static File xmlfile;
 	public static HashMap<String, Integer> hash = new HashMap<String, Integer>();
 	public static HashMap<Integer, String> hash_tab = new HashMap<Integer, String>();
+	public static BufferedImage imageuke, imageclef;
 	
 	//{String4, String3, String2, String1}
 	public static int[][] PSaiten = new int[][]{
@@ -381,7 +384,6 @@ public class tabcreator {
 	    	    			    if((tabmatrix[0][i]!=-1) && (tabmatrix[1][j]!=-1) && (tabmatrix[2][k]!=-1)&& (tabmatrix[3][l]!=-1))
 	    	    			    {
 	    	    			    	paths.add(new MyArray(tabmatrix[0][i],tabmatrix[1][j],tabmatrix[2][k],tabmatrix[3][l]));
-	    	    			    	System.out.println(tabmatrix[0][i]+" , "+tabmatrix[1][j]+" , "+tabmatrix[2][k]+" , "+tabmatrix[3][l]);
 	    	    			    }
 	    	    		    }
 	    	    	    }
@@ -510,7 +512,6 @@ public class tabcreator {
 	        	   Node scorepart = testlist.item(i).getParentNode();
 	        	   Element scorepart_element = (Element) scorepart;
 	        	   piano_part_id = scorepart_element.getAttribute("id");
-	        	   System.out.println("ID: "+scorepart_element.getAttribute("id"));
 	        	}
 	        }
 		
@@ -606,11 +607,9 @@ public class tabcreator {
 	private static void unzip(String zipFilePath, String destDir) throws IOException
 	{
         File dir = new File(destDir);
-        // create output directory if it doesn't exist
         if(!dir.exists()) dir.mkdirs();
         
         FileInputStream fis;
-        //buffer for read and write data to file
         byte[] buffer = new byte[1024];
         
         fis = new FileInputStream(zipFilePath);
@@ -620,20 +619,20 @@ public class tabcreator {
         {
             String fileName = ze.getName();
             File newFile = new File(destDir + File.separator + fileName);
-            System.out.println("Unzipping to "+newFile.getAbsolutePath());
-            //create directories for sub directories in zip
             new File(newFile.getParent()).mkdirs();
             FileOutputStream fos = new FileOutputStream(newFile);
             int len;
-            while ((len = zis.read(buffer)) > 0) {
-            fos.write(buffer, 0, len);
+            
+            while ((len = zis.read(buffer)) > 0) 
+            {
+                fos.write(buffer, 0, len);
             }
+            
             fos.close();
-            //close this ZipEntry
             zis.closeEntry();
             ze = zis.getNextEntry();
         }
-        //close last ZipEntry
+       
         zis.closeEntry();
         zis.close();
         fis.close();
@@ -643,8 +642,10 @@ public class tabcreator {
 	{	
 		fill_hash_map();
 		fill_hashtab();
-        
+       
         try { 
+        	imageuke = ImageIO.read(tabcreator.class.getResource("/resources/uke.png"));
+        	imageclef = ImageIO.read(tabcreator.class.getResource("/resources/clef.png"));
             BufferedWriter out = new BufferedWriter(new FileWriter(fileName)); 
             out.close(); 
             
@@ -680,8 +681,7 @@ public class tabcreator {
     		      String name = xmlfile.getName();
     		      int length = name.length();
     		      if(name.substring(length-3, length).compareTo("mxl")==0) 
-    		      {
-    		    	  System.out.println("mxl");    		    	        		     
+    		      { 		    	        		     
     		    	  String zipFilePath = xmlfile.getAbsolutePath();
     		  		  String destDir = "output/";
     		  		  
@@ -690,7 +690,6 @@ public class tabcreator {
     					  unzip(zipFilePath, destDir);
     					  File folder = new File("output/");
     					  xmlfile = folder.listFiles()[0];
-    					  System.out.println(xmlfile.getName());
     					  parse_xmlfile(); 
         	    	      process_xmlfile();
     				  } 
@@ -703,12 +702,7 @@ public class tabcreator {
     		          parse_xmlfile(); 
     	    	      process_xmlfile();
     		      }
-    		  }
-    		 
-    		  else
-    		  {
-    		      System.out.println("File access cancelled by user.");
-    		  }    
+    		  }  
  		  }
        });
     	  
@@ -731,7 +725,7 @@ public class tabcreator {
     	  {    		 
     		  mypanel.highG=true;
     		  mypanel.lowG=false;
-    		  mypanel.showtab = true; System.out.println("highg");
+    		  mypanel.showtab = true; 
     		  panel.repaint();
     	  }
        });  

@@ -67,165 +67,158 @@ public class mypanel extends JPanel
 	 {
 	      super.paintComponent(g);
 	      
-	      try
-	      {
-	         final BufferedImage image = ImageIO.read(new File("clef.png"));
-	         final BufferedImage image2 = ImageIO.read(new File("uke.png"));
-	         g.drawImage(image, 0, 150, 60, 120, null);
-	         g.drawImage(image2, 250, 20, 650, 440, null);
-	      }
-	      
-	      catch (IOException e) {e.printStackTrace();}
-	      
+	      g.drawImage(tabcreator.imageclef, 0, 150, 60, 120, null);
+	      g.drawImage(tabcreator.imageuke, 250, 20, 650, 440, null);
+	     
 		  g.setColor(Color.GREEN);
-		  g.drawLine(10, 150, 165, 150);
-		  g.drawLine(10, 180, 165, 180);
-		  g.drawLine(10, 210, 165, 210);
-		  g.drawLine(10, 240, 165, 240);
-		  g.drawLine(10, 270, 165, 270);
+		  g.drawLine(10, 150, 165+50, 150);
+		  g.drawLine(10, 180, 165+50, 180);
+		  g.drawLine(10, 210, 165+50, 210);
+		  g.drawLine(10, 240, 165+50, 240);
+		  g.drawLine(10, 270, 165+50, 270);
 		  
-		  g.drawLine(10, 149, 165, 149);
-		  g.drawLine(10, 179, 165, 179);
-		  g.drawLine(10, 209, 165, 209);
-		  g.drawLine(10, 239, 165, 239);
-		  g.drawLine(10, 269, 165, 269);
+		  g.drawLine(10, 149, 165+50, 149);
+		  g.drawLine(10, 179, 165+50, 179);
+		  g.drawLine(10, 209, 165+50, 209);
+		  g.drawLine(10, 239, 165+50, 239);
+		  g.drawLine(10, 269, 165+50, 269);
 		  
-		  g.drawLine(10, 151, 165, 151);
-		  g.drawLine(10, 181, 165, 181);
-		  g.drawLine(10, 211, 165, 211);
-		  g.drawLine(10, 241, 165, 241);
-		  g.drawLine(10, 271, 165, 271);
+		  g.drawLine(10, 151, 165+50, 151);
+		  g.drawLine(10, 181, 165+50, 181);
+		  g.drawLine(10, 211, 165+50, 211);
+		  g.drawLine(10, 241, 165+50, 241);
+		  g.drawLine(10, 271, 165+50, 271);
 		  
-		  g.drawLine(60, 300, 125, 300);
-		  g.drawLine(60, 330, 125, 330);
+		  g.drawLine(60, 300, 125+90, 300);
+		  g.drawLine(60, 330, 125+90, 330);
 		  
-		  g.drawLine(60,  90, 125, 90);
-		  g.drawLine(60, 120, 125, 120);
-		  
-		  g.setColor(Color.CYAN);
-		  if(N[1]) g.fillOval(60, 330, 30, 30);
-		  if(N[3]) g.fillOval(60, 300, 30, 30);
-          if(N[5]) g.fillOval(60, 270, 30, 30);
-		  if(N[7]) g.fillOval(60, 240, 30, 30);
-          if(N[9]) g.fillOval(60, 210, 30, 30);
-		  if(N[11]) g.fillOval(60, 180, 30, 30);
-          if(N[13]) g.fillOval(60, 150, 30, 30);
-		  if(N[15]) g.fillOval(60, 120, 30, 30);  
-		  if(N[17]) g.fillOval(60, 90, 30, 30);
-		  
-		  g.setColor(Color.ORANGE);
-		  if(!N[1])g.drawOval(60, 330, 30, 30);
-		  if(!N[3])g.drawOval(60, 300, 30, 30);
-          if(!N[5])g.drawOval(60, 270, 30, 30);
-		  if(!N[7])g.drawOval(60, 240, 30, 30);
-          if(!N[9]) g.drawOval(60, 210, 30, 30);
-		  if(!N[11]) g.drawOval(60, 180, 30, 30);
-          if(!N[13]) g.drawOval(60, 150, 30, 30);
-		  if(!N[15]) g.drawOval(60, 120, 30, 30);  
-		  if(!N[17]) g.drawOval(60, 90, 30, 30);
+		  g.drawLine(60,  90, 125+90, 90);
+		  g.drawLine(60, 120, 125+90, 120);
 		  
 		  g.setColor(Color.CYAN);
-		  if(N[18]) g.fillOval(90, 75, 30, 30);
-		  if(N[16]) g.fillOval(90, 105, 30, 30);
-		  if(N[14]) g.fillOval(90, 135, 30, 30);
-		  if(N[12]) g.fillOval(90, 165, 30, 30);
-		  if(N[10]) g.fillOval(90, 195, 30, 30);
-		  if(N[8]) g.fillOval(90, 225, 30, 30);
-		  if(N[6]) g.fillOval(90, 255, 30, 30);
-		  if(N[4]) g.fillOval(90, 285, 30, 30);
-		  if(N[2]) g.fillOval(90, 315, 30, 30);
+		  if(N[1]) g.fillOval(60+50, 330, 30, 30);
+		  if(N[3]) g.fillOval(60+50, 300, 30, 30);
+          if(N[5]) g.fillOval(60+50, 270, 30, 30);
+		  if(N[7]) g.fillOval(60+50, 240, 30, 30);
+          if(N[9]) g.fillOval(60+50, 210, 30, 30);
+		  if(N[11]) g.fillOval(60+50, 180, 30, 30);
+          if(N[13]) g.fillOval(60+50, 150, 30, 30);
+		  if(N[15]) g.fillOval(60+50, 120, 30, 30);  
+		  if(N[17]) g.fillOval(60+50, 90, 30, 30);
 		  
 		  g.setColor(Color.ORANGE);
-		  if(!N[18]) g.drawOval(90, 75, 30, 30);
-		  if(!N[16]) g.drawOval(90, 105, 30, 30);
-		  if(!N[14]) g.drawOval(90, 135, 30, 30);
-		  if(!N[12]) g.drawOval(90, 165, 30, 30);
-		  if(!N[10]) g.drawOval(90, 195, 30, 30);
-		  if(!N[8]) g.drawOval(90, 225, 30, 30);
-		  if(!N[6]) g.drawOval(90, 255, 30, 30);
-		  if(!N[4]) g.drawOval(90, 285, 30, 30);
-		  if(!N[2]) g.drawOval(90, 315, 30, 30);
+		  if(!N[1])g.drawOval(60+50, 330, 30, 30);
+		  if(!N[3])g.drawOval(60+50, 300, 30, 30);
+          if(!N[5])g.drawOval(60+50, 270, 30, 30);
+		  if(!N[7])g.drawOval(60+50, 240, 30, 30);
+          if(!N[9]) g.drawOval(60+50, 210, 30, 30);
+		  if(!N[11]) g.drawOval(60+50, 180, 30, 30);
+          if(!N[13]) g.drawOval(60+50, 150, 30, 30);
+		  if(!N[15]) g.drawOval(60+50, 120, 30, 30);  
+		  if(!N[17]) g.drawOval(60+50, 90, 30, 30);
+		  
+		  g.setColor(Color.CYAN);
+		  if(N[18]) g.fillOval(90+50, 75, 30, 30);
+		  if(N[16]) g.fillOval(90+50, 105, 30, 30);
+		  if(N[14]) g.fillOval(90+50, 135, 30, 30);
+		  if(N[12]) g.fillOval(90+50, 165, 30, 30);
+		  if(N[10]) g.fillOval(90+50, 195, 30, 30);
+		  if(N[8]) g.fillOval(90+50, 225, 30, 30);
+		  if(N[6]) g.fillOval(90+50, 255, 30, 30);
+		  if(N[4]) g.fillOval(90+50, 285, 30, 30);
+		  if(N[2]) g.fillOval(90+50, 315, 30, 30);
+		  
+		  g.setColor(Color.ORANGE);
+		  if(!N[18]) g.drawOval(90+50, 75, 30, 30);
+		  if(!N[16]) g.drawOval(90+50, 105, 30, 30);
+		  if(!N[14]) g.drawOval(90+50, 135, 30, 30);
+		  if(!N[12]) g.drawOval(90+50, 165, 30, 30);
+		  if(!N[10]) g.drawOval(90+50, 195, 30, 30);
+		  if(!N[8]) g.drawOval(90+50, 225, 30, 30);
+		  if(!N[6]) g.drawOval(90+50, 255, 30, 30);
+		  if(!N[4]) g.drawOval(90+50, 285, 30, 30);
+		  if(!N[2]) g.drawOval(90+50, 315, 30, 30);
 		 
 		  //Draw # and b
 		  Font font = new Font("Verdana", Font.ITALIC, 35);
 	      g.setFont(font);
 	      g.setColor(Color.CYAN);
-	      if(S[1])g.drawString("#", 35, 358);
-	      if(S[3])g.drawString("#", 35, 328);	     
-	      if(S[5])g.drawString("#", 35, 298);
-	      if(S[7])g.drawString("#", 35, 268);
-	      if(S[9])g.drawString("#", 35, 238);
-	      if(S[11])g.drawString("#", 35, 208);
-	      if(S[13])g.drawString("#", 35, 178);
-	      if(S[15])g.drawString("#", 35, 148);
-	      if(S[17])g.drawString("#", 35, 118);
+	      if(S[1])g.drawString("#", 35+50, 358);
+	      if(S[3])g.drawString("#", 35+50, 328);	     
+	      if(S[5])g.drawString("#", 35+50, 298);
+	      if(S[7])g.drawString("#", 35+50, 268);
+	      if(S[9])g.drawString("#", 35+50, 238);
+	      if(S[11])g.drawString("#", 35+50, 208);
+	      if(S[13])g.drawString("#", 35+50, 178);
+	      if(S[15])g.drawString("#", 35+50, 148);
+	      if(S[17])g.drawString("#", 35+50, 118);
 	      
-	      if(S[2])g.drawString("#", 115, 343);		  
-		  if(S[4]) g.drawString("#", 115, 313);
-		  if(S[6]) g.drawString("#", 115, 283);
-		  if(S[8]) g.drawString("#", 115, 253);
-		  if(S[10]) g.drawString("#", 115, 223);
-		  if(S[12]) g.drawString("#", 115, 193);
-		  if(S[14]) g.drawString("#", 115, 163);
-		  if(S[16]) g.drawString("#", 115, 133);
+	      if(S[2])g.drawString("#", 115+50, 343);		  
+		  if(S[4]) g.drawString("#", 115+50, 313);
+		  if(S[6]) g.drawString("#", 115+50, 283);
+		  if(S[8]) g.drawString("#", 115+50, 253);
+		  if(S[10]) g.drawString("#", 115+50, 223);
+		  if(S[12]) g.drawString("#", 115+50, 193);
+		  if(S[14]) g.drawString("#", 115+50, 163);
+		  if(S[16]) g.drawString("#", 115+50, 133);
 		  
-		  if(B[17]) g.drawString("b", 10, 118);
-		  if(B[15]) g.drawString("b", 10, 148);
-		  if(B[13]) g.drawString("b", 10, 178);
-		  if(B[11]) g.drawString("b", 10, 208);
-		  if(B[9]) g.drawString("b", 10, 238);
-		  if(B[7]) g.drawString("b", 10, 268);
-		  if(B[5]) g.drawString("b", 10, 298);
-		  if(B[3]) g.drawString("b", 10, 328);
+		  if(B[17]) g.drawString("b", 10+50, 118);
+		  if(B[15]) g.drawString("b", 10+50, 148);
+		  if(B[13]) g.drawString("b", 10+50, 178);
+		  if(B[11]) g.drawString("b", 10+50, 208);
+		  if(B[9]) g.drawString("b", 10+50, 238);
+		  if(B[7]) g.drawString("b", 10+50, 268);
+		  if(B[5]) g.drawString("b", 10+50, 298);
+		  if(B[3]) g.drawString("b", 10+50, 328);
 		  
-		  if(B[18]) g.drawString("b", 145, 103);
-		  if(B[16]) g.drawString("b", 145, 133);
-		  if(B[14]) g.drawString("b", 145, 163);
-		  if(B[12]) g.drawString("b", 145, 193);
-		  if(B[10]) g.drawString("b", 145, 223);
-		  if(B[8]) g.drawString("b", 145, 253);
-		  if(B[6]) g.drawString("b", 145, 283);
-		  if(B[4]) g.drawString("b", 145, 313);
-		  if(B[2]) g.drawString("b", 145, 343);
+		  if(B[18]) g.drawString("b", 145+50, 103);
+		  if(B[16]) g.drawString("b", 145+50, 133);
+		  if(B[14]) g.drawString("b", 145+50, 163);
+		  if(B[12]) g.drawString("b", 145+50, 193);
+		  if(B[10]) g.drawString("b", 145+50, 223);
+		  if(B[8]) g.drawString("b", 145+50, 253);
+		  if(B[6]) g.drawString("b", 145+50, 283);
+		  if(B[4]) g.drawString("b", 145+50, 313);
+		  if(B[2]) g.drawString("b", 145+50, 343);
 	      
 	      g.setColor(Color.ORANGE);
-		  if(!S[1]) g.drawString("#", 35, 358);
-		  if(!S[3])g.drawString("#", 35, 328); 
-		  if(!S[5])g.drawString("#", 35, 298);
-		  if(!S[7])g.drawString("#", 35, 268);
-	      if(!S[9])g.drawString("#", 35, 238);
-	      if(!S[11])g.drawString("#", 35, 208);
-	      if(!S[13])g.drawString("#", 35, 178);
-	      if(!S[15])g.drawString("#", 35, 148);
-	      if(!S[17])g.drawString("#", 35, 118);
+		  if(!S[1]) g.drawString("#", 35+50, 358);
+		  if(!S[3])g.drawString("#", 35+50, 328); 
+		  if(!S[5])g.drawString("#", 35+50, 298);
+		  if(!S[7])g.drawString("#", 35+50, 268);
+	      if(!S[9])g.drawString("#", 35+50, 238);
+	      if(!S[11])g.drawString("#", 35+50, 208);
+	      if(!S[13])g.drawString("#", 35+50, 178);
+	      if(!S[15])g.drawString("#", 35+50, 148);
+	      if(!S[17])g.drawString("#", 35+50, 118);
 	      
-	      if(!S[2])g.drawString("#", 115, 343);		  
-		  if(!S[4]) g.drawString("#", 115, 313);
-		  if(!S[6]) g.drawString("#", 115, 283);
-		  if(!S[8]) g.drawString("#", 115, 253);
-		  if(!S[10]) g.drawString("#", 115, 223);
-		  if(!S[12]) g.drawString("#", 115, 193);
-		  if(!S[14]) g.drawString("#", 115, 163);
-		  if(!S[16]) g.drawString("#", 115, 133);
+	      if(!S[2])g.drawString("#", 115+50, 343);		  
+		  if(!S[4]) g.drawString("#", 115+50, 313);
+		  if(!S[6]) g.drawString("#", 115+50, 283);
+		  if(!S[8]) g.drawString("#", 115+50, 253);
+		  if(!S[10]) g.drawString("#", 115+50, 223);
+		  if(!S[12]) g.drawString("#", 115+50, 193);
+		  if(!S[14]) g.drawString("#", 115+50, 163);
+		  if(!S[16]) g.drawString("#", 115+50, 133);
 		  
-		  if(!B[17]) g.drawString("b", 10, 118);
-		  if(!B[15]) g.drawString("b", 10, 148);
-		  if(!B[13]) g.drawString("b", 10, 178);
-		  if(!B[11]) g.drawString("b", 10, 208);
-		  if(!B[9]) g.drawString("b", 10, 238);
-		  if(!B[7]) g.drawString("b", 10, 268);
-		  if(!B[5]) g.drawString("b", 10, 298);
-		  if(!B[3]) g.drawString("b", 10, 328);
+		  if(!B[17]) g.drawString("b", 10+50, 118);
+		  if(!B[15]) g.drawString("b", 10+50, 148);
+		  if(!B[13]) g.drawString("b", 10+50, 178);
+		  if(!B[11]) g.drawString("b", 10+50, 208);
+		  if(!B[9]) g.drawString("b", 10+50, 238);
+		  if(!B[7]) g.drawString("b", 10+50, 268);
+		  if(!B[5]) g.drawString("b", 10+50, 298);
+		  if(!B[3]) g.drawString("b", 10+50, 328);
 		  
-		  if(!B[18]) g.drawString("b", 145, 103);
-		  if(!B[16]) g.drawString("b", 145, 133);
-		  if(!B[14]) g.drawString("b", 145, 163);
-		  if(!B[12]) g.drawString("b", 145, 193);
-		  if(!B[10]) g.drawString("b", 145, 223);
-		  if(!B[8]) g.drawString("b", 145, 253);
-		  if(!B[6]) g.drawString("b", 145, 283);
-		  if(!B[4]) g.drawString("b", 145, 313);
-		  if(!B[2]) g.drawString("b", 145, 343);
+		  if(!B[18]) g.drawString("b", 145+50, 103);
+		  if(!B[16]) g.drawString("b", 145+50, 133);
+		  if(!B[14]) g.drawString("b", 145+50, 163);
+		  if(!B[12]) g.drawString("b", 145+50, 193);
+		  if(!B[10]) g.drawString("b", 145+50, 223);
+		  if(!B[8]) g.drawString("b", 145+50, 253);
+		  if(!B[6]) g.drawString("b", 145+50, 283);
+		  if(!B[4]) g.drawString("b", 145+50, 313);
+		  if(!B[2]) g.drawString("b", 145+50, 343);
 		
 		  //Draw Tab
 		  g.setColor(Color.RED);
@@ -233,6 +226,16 @@ public class mypanel extends JPanel
 		  g.drawLine(tab_x,tab_y2,tab_x+30,tab_y2);
 		  g.drawLine(tab_x,tab_y3,tab_x+30,tab_y3);
 		  g.drawLine(tab_x,tab_y4,tab_x+30,tab_y4);
+		  
+		  g.drawLine(tab_x,tab_y1-1,tab_x+30,tab_y1-1);
+		  g.drawLine(tab_x,tab_y2-1,tab_x+30,tab_y2-1);
+		  g.drawLine(tab_x,tab_y3-1,tab_x+30,tab_y3-1);
+		  g.drawLine(tab_x,tab_y4-1,tab_x+30,tab_y4-1);
+		  
+		  g.drawLine(tab_x,tab_y1+1,tab_x+30,tab_y1+1);
+		  g.drawLine(tab_x,tab_y2+1,tab_x+30,tab_y2+1);
+		  g.drawLine(tab_x,tab_y3+1,tab_x+30,tab_y3+1);
+		  g.drawLine(tab_x,tab_y4+1,tab_x+30,tab_y4+1);
 		  
 		  //LowG HighG
 		  Font fontehl = new Font("Verdana", Font.ITALIC, 20);
