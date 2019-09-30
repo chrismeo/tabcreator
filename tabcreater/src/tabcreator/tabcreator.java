@@ -34,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -72,6 +73,7 @@ public class tabcreator {
 	public static BufferedImage imageuke, imageclef;
 	public static JTextField tf4,tf1,tf2,tf3;
 	public static JMenuBar mb;
+	public static JPopupMenu pm;
 	public static Boolean mbvalue = false;
 	public static JLabel l1,l2,l3,l4;
 	public static JPanel test1, test2,test3, test4;
@@ -656,7 +658,19 @@ public class tabcreator {
 	        	{  
 	        	   Node scorepart = testlist.item(i).getParentNode();
 	        	   Element scorepart_element = (Element) scorepart;
-	        	   piano_part_id = scorepart_element.getAttribute("id");
+	        	   piano_part_id = scorepart_element.getAttribute("id"); 
+	        	}
+	        } 
+	        
+	        if(piano_part_id.compareTo("")==0) {
+	        	NodeList instrumentlist =  doc.getElementsByTagName("instrument-name");
+	        	
+	        	for(int j=0;j<instrumentlist.getLength();j++) {
+	        		if((instrumentlist.item(j).getTextContent().contains("Klavier")) || (instrumentlist.item(j).getTextContent().contains("Piano"))) {
+	        	        Node parent = instrumentlist.item(j).getParentNode().getParentNode();
+	        	        Element parent_element = (Element) parent;
+	 	        	    piano_part_id = parent_element.getAttribute("id"); 	        		
+	        		}
 	        	}
 	        }
 		
@@ -805,7 +819,7 @@ public class tabcreator {
 	   myframe.getContentPane().setLayout(new BoxLayout(myframe.getContentPane(),BoxLayout.Y_AXIS));   
 	   buttonlowG = new JButton("Low G");
 	   buttonhighG = new JButton("High G");
-	   buttonselectmusicXML = new JButton("select musicXML File and convert");
+	   buttonselectmusicXML = new JButton("select musicXML File");
 	   panel = new MyPanel();
 	   panel.setPreferredSize(new Dimension(1000,500));
        panel.setBackground(/*Color.DARK_GRAY*/Color.WHITE);
@@ -879,9 +893,16 @@ public class tabcreator {
        panel.addMouseListener(new MouseAdapter()
        {
     	   public void mouseClicked(MouseEvent mouseEvent) {
+    		   mousePT = mouseEvent.getPoint();
+    		   
     	        if (mouseEvent.getClickCount() == 2) {  
     	        	mbvalue = !mbvalue;
-    	        	mb.setVisible(mbvalue); 
+    	        	//mb.setVisible(mbvalue); 
+    	        	pm.setVisible(mbvalue);
+    	        	Double x = mousePT.getX();
+    	        	Double y = mousePT.getY();
+    	        
+    	        	pm.show(myframe.getContentPane(),x.intValue(), y.intValue());
     	        }
     	   }
     	   
@@ -1427,7 +1448,8 @@ public class tabcreator {
     		  tf3.setText("    ");
     		  tf4.setText("    ");
     		  mbvalue = false;
-    		  mb.setVisible(false);
+    		  //mb.setVisible(false);
+    		  pm.setVisible(false);
     		  panel.repaint();
     	  }
        });
@@ -1496,6 +1518,7 @@ public class tabcreator {
 		  public void actionPerformed(ActionEvent arg0)
 		  {
 			  bar2 = true;
+			  clearbutton.doClick();
 		  }
        });
        
@@ -1504,7 +1527,7 @@ public class tabcreator {
 		  @Override
 		  public void actionPerformed(ActionEvent arg0)
 		  {
-			  File file = new File("data.txt"); file.deleteOnExit();
+			  File file = new File("data.txt"); //file.deleteOnExit();
 			  File f = new File("TABS.txt");
 			  
 			  if(f.exists() && !f.isDirectory())
@@ -1630,7 +1653,7 @@ public class tabcreator {
 		 	  
 		 	  catch (FileNotFoundException e1) {e1.printStackTrace();}		 	  
 		 	  catch (IOException e) {e.printStackTrace();} 
-		 	  
+		 	  file.delete();
 		      JOptionPane.showInternalMessageDialog(panel, "TAB file written");
 		  }
        });
@@ -1648,43 +1671,51 @@ public class tabcreator {
        buttonpanel2.add(barline);
        panel.add(buttonpanel2);
        
-       mb = new JMenuBar();
+       //mb = new JMenuBar();
+       pm = new JPopupMenu();
        
-       l1 = new JLabel("Tab 4:");
+       l1 = new JLabel("String 1:");
        test1 = new JPanel();
        test1.add(l1);       
        tf1 = new JTextField();
        tf1.setText("     ");
        test1.add(tf1);
-       mb.add(test1);
+       //mb.add(test1);
+       pm.add(test1);
        
-       l2 = new JLabel("Tab 3:");
+       l2 = new JLabel("String 2:");
        test2 = new JPanel();
        test2.add(l2);  
        tf2 = new JTextField();
        tf2.setText("     ");
        test2.add(tf2);
-       mb.add(test2);
-      
-       l3 = new JLabel("Tab 2:");
+       //mb.add(test2);
+       pm.add(test2);
+       
+       l3 = new JLabel("String 3:");
        test3 = new JPanel();
        test3.add(l3); 
        tf3 = new JTextField();
        tf3.setText("     ");
        test3.add(tf3);
-       mb.add(test3);
+       //mb.add(test3);
+       pm.add(test3);
        
-       l4 = new JLabel("Tab 1:");
+       l4 = new JLabel("String 4:");
        test4 = new JPanel();
        test4.add(l4); 
        tf4 = new JTextField();
        tf4.setText("     ");
        test4.add(tf4);
-       mb.add(test4);
-        
-       mb.setLayout(new BoxLayout(mb, BoxLayout.PAGE_AXIS));
-       panel.add(mb);
-       mb.setVisible(false);
+       //mb.add(test4);
+       pm.add(test4); 
+       
+       //mb.setLayout(new BoxLayout(mb, BoxLayout.PAGE_AXIS));
+       //panel.add(mb);
+       panel.add(pm);
+      
+       //mb.setVisible(false);
+       pm.setVisible(false);
        panel.repaint();
       
 	   myframe.getContentPane().add(panel);

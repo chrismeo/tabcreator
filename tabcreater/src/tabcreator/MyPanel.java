@@ -244,6 +244,13 @@ public class MyPanel extends JPanel
 		
 		  //Draw Tab
 		  g.setColor(Color.RED);
+		  Font fontsmall = new Font("Verdana", Font.ITALIC, 15);
+	      g.setFont(fontsmall);
+		  g.drawString("1th", tab_x-10, tab_y1);
+		  g.drawString("2th", tab_x-10, tab_y2);
+		  g.drawString("3th", tab_x-10, tab_y3);
+		  g.drawString("4th", tab_x-10, tab_y4);
+		  
 		  g.drawLine(tab_x,tab_y1,tab_x+60,tab_y1);
 		  g.drawLine(tab_x,tab_y2,tab_x+60,tab_y2);
 		  g.drawLine(tab_x,tab_y3,tab_x+60,tab_y3);
